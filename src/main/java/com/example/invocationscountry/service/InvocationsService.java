@@ -10,4 +10,8 @@ public interface InvocationsService {
     List<Invocations> getAll();
 
     Integer getInvocationByCountry(String country);
+
+    String getDistanceByCountry(String country);
+
+    Invocations findInvocationsByCountry(String country);
 }

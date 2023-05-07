@@ -26,7 +26,17 @@ public class InvocationsServiceImpl implements InvocationsService {
 
     @Override
     public Integer getInvocationByCountry(String country) {
-        Integer TotalInvocationByCountry = invocationsRepository.getCountInvocationsByCountry(country);
+        Integer TotalInvocationByCountry = invocationsRepository.getInvocationsByCountry(country);
         return TotalInvocationByCountry;
+    }
+    @Override
+    public String getDistanceByCountry(String country){
+        String TotalDistanceByCountry = invocationsRepository.getDistanceByCountry(country);
+        return TotalDistanceByCountry;
+    }
+    @Override
+    public Invocations findInvocationsByCountry(String country){
+        Invocations findInvocationByCountry = invocationsRepository.findInvocationsByCountry(country);
+        return findInvocationByCountry;
     }
 }

@@ -9,5 +9,10 @@ import org.springframework.stereotype.Repository;
 public interface InvocationsRepository extends JpaRepository<Invocations, Integer> {
 
     @Query("SELECT s.invocations FROM Invocations s WHERE s.country = :country")
-    Integer getCountInvocationsByCountry(String country);
+    Integer getInvocationsByCountry(String country);
+
+    @Query("SELECT s.distance FROM Invocations s WHERE s.country = :country")
+    String getDistanceByCountry(String country);
+
+    Invocations findInvocationsByCountry(String countryName);
 }
