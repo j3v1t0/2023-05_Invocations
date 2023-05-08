@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface InvocationsRepository extends JpaRepository<Invocations, Integer> {
 
@@ -15,4 +17,9 @@ public interface InvocationsRepository extends JpaRepository<Invocations, Intege
     String getDistanceByCountry(String country);
 
     Invocations findInvocationsByCountry(String countryName);
+    @Query(value = "SELECT MIN(CONVERT(SUBSTRING_INDEX(distance, ' ', 1), DECIMAL(10,2))) FROM invocations", nativeQuery = true)
+    public String min();
+    @Query(value = "SELECT MAX(CONVERT(SUBSTRING_INDEX(distance, ' ', 1), DECIMAL(10,2))) FROM invocations", nativeQuery = true)
+    public String max();
+    Invocations findByDistance(String distance);
 }
