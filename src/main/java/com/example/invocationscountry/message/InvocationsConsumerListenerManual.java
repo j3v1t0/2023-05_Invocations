@@ -60,10 +60,10 @@ public class InvocationsConsumerListenerManual implements AcknowledgingMessageLi
             }else {
                 //Consulting the total number of invocations per country in the database.
                 Invocations invocationsRequestByCountry = invocationsService.findInvocationsByCountry(countryName);
-                //Integer totalInvocationsByCountry = (invocationsService.getInvocationByCountry(countryName));
 
                 //Validating if the table have invocations from that country.
                 if (invocationsRequestByCountry == null){
+
                     invocations.setInvocations(1);
                     //Calculating distance between the country that sends the request and Argentina.
                     Double totalDistanceInvocation = DistanceUtil.calculateDistanceFromArgentina(latitude, longitude);
@@ -78,6 +78,7 @@ public class InvocationsConsumerListenerManual implements AcknowledgingMessageLi
                     log.info("Post: Country {} - Distance {} - Invocaciones {}", countryName, convertToString, 1);
 
                 } else {
+
                     Integer totalInvocationsByCountry =invocationsRequestByCountry.getInvocations();
                     //Incrementamos el valor 1
                     totalInvocationsByCountry++;
@@ -111,7 +112,6 @@ public class InvocationsConsumerListenerManual implements AcknowledgingMessageLi
                     invocationsService.saveInvocation(invocations);
                     log.info("Post: Country {} - Distance {} - Invocaciones {}", countryName, convertToString, totalInvocationsByCountry);
                 }
-
             }
             acknowledgment.acknowledge();
 
