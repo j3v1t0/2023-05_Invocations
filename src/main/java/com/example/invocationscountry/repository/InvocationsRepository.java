@@ -21,5 +21,8 @@ public interface InvocationsRepository extends JpaRepository<Invocations, Intege
     public String min();
     @Query(value = "SELECT MAX(CONVERT(SUBSTRING_INDEX(distance, ' ', 1), DECIMAL(10,2))) FROM invocations", nativeQuery = true)
     public String max();
+
+    @Query(value = "SELECT SUM(CONVERT(SUBSTRING_INDEX(invocations, ' ', 1), DECIMAL(10,2))) FROM invocations", nativeQuery = true)
+    public String getTotalSum();
     Invocations findByDistance(String distance);
 }

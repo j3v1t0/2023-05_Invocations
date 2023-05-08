@@ -1,5 +1,6 @@
 package com.example.invocationscountry.service;
 
+import com.example.invocationscountry.dto.AverageDistance;
 import com.example.invocationscountry.dto.InvocationDistance;
 import com.example.invocationscountry.model.Invocations;
 
@@ -19,4 +20,6 @@ public interface InvocationsService {
     InvocationDistance getCloseDistance();
 
     InvocationDistance getFarDistance();
+
+    AverageDistance getAverageDistance();
 }

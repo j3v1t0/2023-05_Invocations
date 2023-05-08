@@ -1,5 +1,6 @@
 package com.example.invocationscountry.service.implementation;
 
+import com.example.invocationscountry.dto.AverageDistance;
 import com.example.invocationscountry.dto.InvocationDistance;
 import com.example.invocationscountry.model.Invocations;
 import com.example.invocationscountry.repository.InvocationsRepository;
@@ -68,5 +69,30 @@ public class InvocationsServiceImpl implements InvocationsService {
         invocationDistance.setInvocations(invocations.getInvocations());
         invocationDistance.setCountry(invocations.getCountry());
         return invocationDistance;
+    }
+
+    @Override
+    public AverageDistance getAverageDistance(){
+        AverageDistance distanceResponse = new AverageDistance();
+
+        // Obtener la suma de las invocaciones desde la base de datos
+        Double totalInvocations = Double.valueOf(invocationsRepository.getTotalSum());
+
+        // Obtener todos los registros de la tabla Invocations
+        List<Invocations> invocationsList = invocationsRepository.findAll();
+
+        // Calcular la distancia promedio ponderada
+        double totalDistanceWeighted = 0.0;
+        for (Invocations invocation : invocationsList) {
+            double distance = Double.parseDouble(invocation.getDistance().replace(" km", ""));
+            int invocations = invocation.getInvocations();
+            totalDistanceWeighted += distance * invocations;
+        }
+        double averageDistance = totalDistanceWeighted / totalInvocations;
+
+        // Configurar la respuesta
+        distanceResponse.setAverageDistance(String.format("%.2f km", averageDistance));
+
+        return distanceResponse;
     }
 }

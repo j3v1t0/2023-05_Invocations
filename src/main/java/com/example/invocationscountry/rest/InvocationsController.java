@@ -1,7 +1,9 @@
 package com.example.invocationscountry.rest;
 
+import com.example.invocationscountry.dto.AverageDistance;
 import com.example.invocationscountry.dto.InvocationDistance;
 import com.example.invocationscountry.service.InvocationsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,14 +37,30 @@ public class InvocationsController {
     @GetMapping("/far-distance")
     public ResponseEntity<?> getMaxDistanceInvocation() {
         try{
-            InvocationDistance closest = invocationsService.getFarDistance();
-            if(closest.getDistance() == null) {
+            InvocationDistance far = invocationsService.getFarDistance();
+            if(far.getDistance() == null) {
                 throw new NullPointerException("Distance is null");
             } else {
-                return new ResponseEntity<>(closest, HttpStatus.OK);
+                return new ResponseEntity<>(far, HttpStatus.OK);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("average-distance")
+    public ResponseEntity<?> getAverageDistance() throws JsonProcessingException {
+        try{
+            AverageDistance avg = invocationsService.getAverageDistance();
+
+            if(avg.getAverageDistance() == null) {
+                throw new NullPointerException("Distance is null");
+            } else {
+                return new ResponseEntity<>(avg, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
